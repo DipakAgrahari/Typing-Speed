@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="typingspeed.css">
+</head>
+<body>
+    <div class="mainDiv">
+        <div class="centerDiv">
+        <h1> Welcome to Typing Speed Test</h1>
+        <h2 id="msg"> </h2>
+        <br>
+        <textarea name="text" id="mywords" cols="100" rows="10" placeholder="Remember`be nice"></textarea>
+        <br>
+        <button id="btn" class="mainbtn">Start</button>    
+    </div>
+    </div>
+
+    <script>
+        const arra=["my name is dipak kumar shaw if you have a money give me",
+        "Money is very important for running a daily need",
+        "i think it is better if you learn and write",
+        "most people don`t like momo like me to",
+        "leh is very beautiful place but kolkata is to ab nhi ata english"
+    ]
+const msg=document.getElementById("msg");
+const typewords=document.getElementById("mywords");
+const btn=document.getElementById("btn");
+let startTime,endTime;
+
+
+
+const playGame=()=>{
+    let randomNumber=Math.floor(Math.random()*arra.length);
+    msg.innerText=arra[randomNumber];
+    let date=new Date();
+    startTime=date.getTime();
+    btn.innerText="Done";
+}
+
+const endPlay=()=>{
+    let date=new Date();
+    endTime=date.getTime();
+    let TotalTime=((endTime-startTime)/1000);
+    // console.log(TotalTime); 
+    let totalString=typewords.value;
+    // console.log(totalString);
+    let wordCount=wordCounter(totalString);
+    let speed=Math.floor((wordCount/TotalTime)*60);
+    let finalMsg="you typed total at "+ speed+ "words per minute";
+    // console.log(finalMsg);
+ finalMsg += compareWords(msg.innerText,totalString)  
+    msg.innerText=finalMsg;
+}
+const compareWords=(str1,str2)=>{
+    let word1=str1.split(" ");
+    let word2=str2.split(" ");
+    console.log(word2);
+    let cnt=0;
+// arrayname then for each then it will take whole function with value and index n0. of that array
+
+word1.forEach(function(item,index){
+    if(item==word2[index]){
+        cnt++;
+    }
+})
+let errorWords=(word1.length-cnt);
+return(cnt+"correct out of"+word1.length+"word and the total number of error are " +errorWords+ ".");
+}
+  
+const wordCounter=(str) =>{
+    let response=str.split(" ").length;
+    return response;
+}
+
+btn.addEventListener('click',function(){
+    // console.log(this);
+    if(this.innerText=="Start"){
+        typewords.disabled=false;
+        playGame();
+    }else if(this.innerText=="Done"){
+        typewords.disabled=true;
+        btn.innerText="Start";
+        endPlay();
+    }
+});
+    </script>
+</body>
+</html>
